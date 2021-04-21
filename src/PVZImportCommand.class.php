@@ -22,7 +22,12 @@ class PVZImportCommand extends Command
     {
         $filepath = Application::i()->baseDir . '/' . $filename;
         $api = new API($appkey);
-        $response = $api->method('public/terminals', [], 3);
+        $response = $api->method('public/terminals', [], 3, false);
+        if ($response['errors']) {
+            $this->controller->doLog('There are errors:');
+            $this->controller->doLog(var_export($response['errors'], true));
+            return;
+        }
         $url = $response['url'];
         $text = file_get_contents($url);
         $tmpname = tempnam(sys_get_temp_dir(), '');

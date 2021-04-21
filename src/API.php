@@ -70,9 +70,11 @@ class API
         // curl_setopt($ch, CURLOPT_VERBOSE, 1);
         $result = curl_exec($ch);
 
-        $logFilename = Application::i()->baseDir . '/logs/' . date('Y-m-d-H-i-s') . ' dellin.txt';
-        $logData = ['url' => $url, 'request' => $data, 'response' => $result];
-        file_put_contents($logFilename, var_export($logData, true));
+        if (Application::i()->debug) {
+            $logFilename = Application::i()->baseDir . '/logs/' . date('Y-m-d-H-i-s') . ' dellin.txt';
+            $logData = ['url' => $url, 'request' => $data, 'response' => $result];
+            file_put_contents($logFilename, var_export($logData, true));
+        }
         return $result;
     }
 
