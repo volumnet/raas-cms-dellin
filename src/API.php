@@ -37,12 +37,6 @@ class API
         if ($appKey) {
             $this->appKey = $appKey;
         }
-        if ($login) {
-            $this->login = $login;
-        }
-        if ($password) {
-            $this->password = $password;
-        }
     }
 
     /**
@@ -57,18 +51,16 @@ class API
         if ($data) {
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-            curl_setopt(
-                $ch,
-                CURLOPT_HTTPHEADER,
-                ['Content-Type: application/json']
-            );
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         }
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         // curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        $st = microtime(1);
         $result = curl_exec($ch);
+        // var_dump($url, microtime(1) - $st); exit;
 
         if (Application::i()->debug) {
             $logFilename = Application::i()->baseDir . '/logs/' . date('Y-m-d-H-i-s') . ' dellin.txt';

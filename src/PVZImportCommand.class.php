@@ -23,7 +23,7 @@ class PVZImportCommand extends Command
         $filepath = Application::i()->baseDir . '/' . $filename;
         $api = new API($appkey);
         $response = $api->method('public/terminals', [], 3, false);
-        if ($response['errors']) {
+        if ($response['errors'] ?? null) {
             $this->controller->doLog('There are errors:');
             $this->controller->doLog(var_export($response['errors'], true));
             return;
